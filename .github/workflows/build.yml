@@ -1,0 +1,47 @@
+name: Build App
+#on: push
+on:
+  workflow_dispatch:
+    #inputs:
+      #branch:
+        #description: "Inserisci il nome della branch"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: checkout repository code
+      uses: actions/checkout@v3
+
+    - name: Setup node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+
+    - name: install yarn
+      run: npm install yarn
+
+    - name: install yarn dependency
+      run: yarn install
+
+    - name: Execute build
+      run: yarn build
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test app
+        run: npm run test
