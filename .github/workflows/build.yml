@@ -40,8 +40,11 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Install dependencies
-        run: npm install
-
+      - name: install yarn
+        run: npm install yarn
+  
+      - name: install yarn dependency
+        run: yarn install
+        
       - name: Test app
-        run: npm run test
+        run: yarn test
